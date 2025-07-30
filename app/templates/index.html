@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Email Detector</title>
+  <link rel="icon" href="{{ url_for('static', filename='balance.png') }}" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    textarea {
+      height: 200px;
+      padding: 15px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      resize: vertical;
+      margin-bottom: 20px;
+      transition: border 0.3s;
+    }
+
+    textarea:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 1.1rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    .safe {
+      background-color: #eafaf1;
+      color: #2ecc71;
+      border: 2px solid #2ecc71;
+    }
+
+    .phishing {
+      background-color: #fdecea;
+      color: #e74c3c;
+      border: 2px solid #e74c3c;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 25px;
+      }
+
+      textarea {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Email Detector</h1>
+    <form method="POST">
+      <textarea name="email" placeholder="Paste the email content here..." required></textarea>
+      <button type="submit">Analyze Email</button>
+    </form>
+
+    {% if result %}
+      <div class="result {{ 'phishing' if result.startswith('Phishing') else 'safe' }}">
+        {{ result }}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
